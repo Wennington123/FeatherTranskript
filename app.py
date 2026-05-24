@@ -718,7 +718,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-# =================== SEÇÃO NOS FAÇA UM PIX ===================
+# =================== SEÇÃO NOS FAÇA UM PIX (CORRIGIDA) ===================
 st.markdown("---")
 
 pix_html = """
@@ -747,7 +747,11 @@ pix_html += """
 </div>
 """
 
-st.markdown(pix_html, unsafe_allow_html=True)
+# Renderiza corretamente o HTML (Streamlit ≥ 1.28 usa st.html)
+try:
+    st.html(pix_html)
+except AttributeError:
+    st.markdown(pix_html, unsafe_allow_html=True)
 
 # =================== GETMEP / UPE RODAPÉ ===================
 st.markdown("---")
