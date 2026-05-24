@@ -705,7 +705,8 @@ else:
 
 # =================== SEÇÃO COMPRE-NOS UM CAFÉ ===================
 st.markdown("---")
-st.markdown("""
+
+coffee_html = """
 <div class="coffee-section">
     <h3>☕ Compre-nos um Café</h3>
     <p>Ajude a manter este projeto em funcionamento com uma contribuição simbólica!</p>
@@ -718,19 +719,19 @@ st.markdown("""
 
     <div class="coffee-qrcode">
         <p style="font-weight: 600; color: #6A1B9A;">Escaneie o QR Code ou copie a chave PIX:</p>
-""", unsafe_allow_html=True)
+"""
 
 if pix_qr_b64:
-    st.markdown(f"""
-        <img src="data:image/png;base64,{pix_qr_b64}" style="max-width: 200px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-    """, unsafe_allow_html=True)
+    coffee_html += f'<img src="data:image/png;base64,{pix_qr_b64}" style="max-width: 200px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">'
 
-st.markdown("""
+coffee_html += """
         <div class="pix-key">(74) 98821-7793</div>
         <p class="coffee-tip">💡 Qualquer valor ajuda a manter este projeto vivo!</p>
     </div>
 </div>
-""", unsafe_allow_html=True)
+"""
+
+st.markdown(coffee_html, unsafe_allow_html=True)
 
 # =================== GETMEP / UPE RODAPÉ ===================
 st.markdown("---")
