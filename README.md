@@ -1,102 +1,57 @@
 # 🪶 FeatherTranskript Web
 
-Transcrição de áudio com IA baseada no modelo **Whisper** da OpenAI, otimizado com **Faster-Whisper**.
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+![Whisper](https://img.shields.io/badge/Faster--Whisper-OpenAI-green.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## ✨ Funcionalidades
-
-- 🎙️ **Transcrição automática** de áudio com IA
-- 🇧🇷 **Português otimizado** com reconhecimento de termos em inglês  
-- 📁 **Múltiplos formatos**: MP3, OGG, AAC, WAV, FLAC
-- 📝 **Dois modos**: texto corrido ou com timestamps
-- ⏱️ **Barra de progresso** com estimativa de tempo
-- 💾 **Download** em TXT ou SRT (legendas)
-
-## 🔄 Workflow
-
-Veja como o FeatherTranskript funciona:
-
-```mermaid
-graph LR
-    A["📁 Upload de Áudio"] -->|Enviar arquivo| B["🔄 Conversão"]
-    B -->|Otimizar formato| C["🧠 Carregar Modelo IA"]
-    C -->|Whisper| D["🎙️ Transcrição"]
-    D -->|Processar| E["✅ Resultado"]
-    E -->|Opções| F["💾 Download TXT"]
-    E -->|Opções| G["🎬 Download SRT"]
-    E -->|Opções| H["📋 Copiar Texto"]
-```
-
-## 🚀 Quick Start
-
-### 1. Clonar e instalar
-
-```bash
-git clone https://github.com/seu-usuario/feather-transkript-web.git
-cd feather-transkript-web
-pip install -r requirements.txt
-```
-
-### 2. Instalar FFmpeg
-
-**Linux:**
-```bash
-sudo apt update && sudo apt install ffmpeg
-```
-
-**Mac:**
-```bash
-brew install ffmpeg
-```
-
-**Windows:** [Baixar aqui](https://ffmpeg.org/download.html) e adicionar ao PATH
-
-### 3. Executar
-
-```bash
-streamlit run app.py
-```
-
-Abre automaticamente em `http://localhost:8501`
-
-## 📖 Como Usar
-
-1. **Envie um áudio** em MP3, OGG, AAC, WAV ou FLAC
-2. **Escolha o modo**: texto corrido ou com timestamps
-3. **Selecione o modelo**: tiny (rápido) até large-v3 (preciso)
-4. **Clique em "Iniciar Transcrição"**
-5. **Baixe o resultado** em TXT ou SRT
-
-## ⚙️ Modelos
-
-| Modelo | Velocidade | Precisão | Tamanho |
-|--------|-----------|----------|---------|
-| tiny | ⚡ Muito rápido | ⭐ Básica | ~39 MB |
-| base | 🚀 Rápido | ⭐⭐ Boa | ~74 MB |
-| small | 🚗 Moderado | ⭐⭐⭐ Muito boa | ~244 MB |
-| medium | 🐢 Lento | ⭐⭐⭐⭐ Excelente | ~769 MB |
-| large-v3 | 🐌 Muito lento | ⭐⭐⭐⭐⭐ Máxima | ~1.5 GB |
-
-## 🐳 Docker
-
-```bash
-docker build -t feather-transkript .
-docker run -p 8501:8501 feather-transkript
-```
-
-## ☁️ Deploy
-
-### Streamlit Cloud (recomendado)
-1. Suba para o GitHub
-2. Acesse [share.streamlit.io](https://share.streamlit.io)
-3. Conecte o repositório
-
-## 📄 Licença
-
-MIT License — uso livre para pesquisa e estudo.
+Uma aplicação web ágil e intuitiva para **transcrição de áudio com Inteligência Artificial**. Baseada no poderoso modelo **Whisper** da OpenAI, mas impulsionada pelo **Faster-Whisper** para garantir máxima velocidade e eficiência sem perder a precisão.
 
 ---
 
-**Desenvolvido com ❤️ para a comunidade acadêmica**
+## ✨ Principais Funcionalidades
 
-Vinculado ao **GETMEP** — Grupo de Estudos Teórico-Metodológicos em Educação e Pesquisa
+* 🎙️ **Transcrição Automática:** Conversão de fala para texto utilizando IA de ponta.
+* 🇧🇷 **Otimização para o Português:** Alta precisão no idioma, com reconhecimento inteligente de termos estrangeiros embutidos na fala.
+* 📁 **Suporte Multiformato:** Aceita arquivos em `MP3`, `OGG`, `AAC`, `WAV` e `FLAC`.
+* 📝 **Modos de Visualização:** Escolha entre **Texto Corrido** (ideal para leitura/resumos) ou **Com Timestamps** (ideal para decupagem).
+* ⏱️ **Feedback em Tempo Real:** Barra de progresso com estimativa de tempo durante o processamento.
+* 💾 **Exportação Prática:** Download imediato dos resultados em formato `.TXT` ou arquivo de legenda `.SRT`.
 
+---
+
+## 🔄 Como o FeatherTranskript Funciona?
+
+O fluxo abaixo ilustra a jornada do seu arquivo, desde o upload até a exportação do texto final:
+
+```mermaid
+graph TD
+    subgraph UI ["🖥️ Interface do Usuário (Streamlit)"]
+        A[📁 Upload de Áudio]
+        B[⚙️ Configuração <br> Mode e Modelo]
+        F[✅ Transcrição Concluída]
+        G([💾 Baixar TXT])
+        H([🎬 Baixar SRT])
+        I([📋 Copiar Área de Transferência])
+    end
+
+    subgraph Core ["⚙️ Motor de Processamento (Backend)"]
+        C[🔄 Conversão & Otimização <br> FFmpeg]
+        D[(🧠 Carregamento do Modelo IA <br> Faster-Whisper)]
+        E[🎙️ Inferência & Geração de Texto]
+    end
+
+    A -->|Envia Arquivo| C
+    B -.->|Define Parâmetros| D
+    C -->|Áudio Processado| E
+    D -->|Motor de IA| E
+    E -->|Devolve Resultado| F
+    
+    F --> G
+    F --> H
+    F --> I
+
+    classDef ui fill:#0e1117,stroke:#ff4b4b,stroke-width:2px,color:#fff;
+    classDef core fill:#1e1e1e,stroke:#4CAF50,stroke-width:2px,color:#fff;
+    class UI ui;
+    class Core core;
