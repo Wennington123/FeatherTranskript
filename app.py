@@ -502,7 +502,13 @@ st.markdown("---")
 
 # Sidebar com configurações
 with st.sidebar:
-    st.markdown("### ⚙️ Configurações")
+    col1, col2 = st.columns([0.85, 0.15])
+    with col1:
+        st.markdown("### ⚙️ Configurações")
+    with col2:
+        if st.button("✕", key="close_sidebar", help="Fechar"):
+            st.session_state.sidebar_state = "collapsed"
+            st.rerun()
 
     model_size = st.selectbox(
         "Modelo de IA",
@@ -780,6 +786,6 @@ else:
 # Footer
 st.markdown("""
 <div class="footer">
-    🪶 FeatherTranskript Web v1.0 | <a href="https://github.com/seu-usuario/feather-transkript-web" target="_blank">GitHub</a>
+    🪶 FeatherTranskript Web v1.0 | <a href="https://github.com/Wennington123/FeatherTranskript/tree/web_ver" target="_blank">GitHub</a>
 </div>
 """, unsafe_allow_html=True)
