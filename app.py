@@ -287,60 +287,69 @@ st.markdown(f"""
         margin: 25px 0;
     }}
 
-    /* ===== CAFÉ - COMPRE-NOS UM CAFÉ ===== */
-    .coffee-section {{
-        background: linear-gradient(135deg, rgba(123, 31, 162, 0.1), rgba(142, 68, 173, 0.1));
-        border: 2px solid #7B1FA2;
+    /* ===== PIX - DOAÇÃO ===== */
+    .pix-section {{
+        background: linear-gradient(135deg, rgba(0, 150, 136, 0.08), rgba(0, 150, 136, 0.02));
+        border: 2px solid #009688;
         border-radius: 16px;
         padding: 28px 24px;
         text-align: center;
         margin: 30px 0;
     }}
-    .coffee-section h3 {{
-        color: #6A1B9A;
-        font-size: 1.35em;
+    .pix-section h3 {{
+        color: #00695C;
+        font-size: 1.4em;
         margin-top: 0;
         margin-bottom: 15px;
         font-weight: 700;
     }}
-    .coffee-section p {{
+    .pix-section p {{
         color: #455A64;
         font-size: 0.95em;
         margin: 8px 0;
     }}
-    .coffee-buttons {{
+    .pix-grid {{
         display: flex;
         justify-content: center;
-        gap: 12px;
+        gap: 15px;
         flex-wrap: wrap;
-        margin: 18px 0;
+        margin: 20px 0 15px;
     }}
-    .coffee-btn {{
-        background: linear-gradient(135deg, #7B1FA2, #9C27B0);
-        color: white;
-        border: none;
+    .pix-card {{
+        background: white;
+        border: 2px solid #009688;
         border-radius: 12px;
-        padding: 11px 22px;
-        font-weight: 600;
-        font-size: 0.96em;
+        padding: 15px 25px;
+        min-width: 80px;
+        font-size: 1.2em;
+        font-weight: 700;
+        color: #00695C;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        user-select: none;
     }}
-    .coffee-btn:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(123, 31, 162, 0.4);
-        background: linear-gradient(135deg, #6A1B9A, #7B1FA2);
+    .pix-card:hover {{
+        background: #009688;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 150, 136, 0.3);
     }}
-    .coffee-qrcode {{
+    .pix-card.other {{
+        background: #f5f5f5;
+        border-style: dashed;
+        font-weight: 600;
+        color: #00796B;
+    }}
+    .pix-qrcode {{
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-top: 20px;
         padding-top: 20px;
-        border-top: 1px solid rgba(123, 31, 162, 0.3);
+        border-top: 1px solid rgba(0, 150, 136, 0.3);
     }}
-    .coffee-qrcode img {{
+    .pix-qrcode img {{
         max-width: 200px;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -348,19 +357,19 @@ st.markdown(f"""
     }}
     .pix-key {{
         background: white;
-        border: 2px solid #7B1FA2;
+        border: 2px solid #009688;
         border-radius: 8px;
         padding: 12px;
         font-family: monospace;
         font-size: 1.1em;
-        color: #6A1B9A;
+        color: #004D40;
         font-weight: 600;
         word-break: break-all;
         margin: 12px 0;
     }}
-    .coffee-tip {{
+    .pix-tip {{
         font-size: 0.85em;
-        color: #7B1FA2;
+        color: #00695C;
         font-style: italic;
         margin-top: 10px;
     }}
@@ -506,15 +515,9 @@ st.markdown("<p style='text-align:center; color:#607D8B; font-size:1.1em; margin
 
 st.markdown("---")
 
-# Sidebar com configurações
+# Sidebar com configurações (sem o "✕")
 with st.sidebar:
-    col1, col2 = st.columns([0.85, 0.15])
-    with col1:
-        st.markdown("### ⚙️ Configurações")
-    with col2:
-        if st.button("✕", key="close_sidebar", help="Fechar"):
-            st.session_state.sidebar_state = "collapsed"
-            st.rerun()
+    st.markdown("### ⚙️ Configurações")
 
     model_size = st.selectbox(
         "Modelo de IA",
@@ -715,35 +718,36 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-# =================== SEÇÃO COMPRE-NOS UM CAFÉ ===================
+# =================== SEÇÃO NOS FAÇA UM PIX ===================
 st.markdown("---")
 
-coffee_html = """
-<div class="coffee-section">
-    <h3>☕ Compre-nos um Café</h3>
-    <p>Ajude a manter este projeto em funcionamento com uma contribuição simbólica!</p>
+pix_html = """
+<div class="pix-section">
+    <h3>💛 Nos faça um Pix!</h3>
+    <p>Seu apoio mantém este projeto no ar e ajuda a desenvolver novas funcionalidades.</p>
     
-    <div class="coffee-buttons">
-        <button class="coffee-btn">☕ R$ 5</button>
-        <button class="coffee-btn">☕☕ R$ 15</button>
-        <button class="coffee-btn">☕☕☕ R$ 20</button>
+    <div class="pix-grid">
+        <div class="pix-card">R$ 5</div>
+        <div class="pix-card">R$ 10</div>
+        <div class="pix-card">R$ 15</div>
+        <div class="pix-card other">Outro valor</div>
     </div>
 
-    <div class="coffee-qrcode">
-        <p style="font-weight: 600; color: #6A1B9A;">Escaneie o QR Code ou copie a chave PIX:</p>
+    <div class="pix-qrcode">
+        <p style="font-weight: 600; color: #00695C;">Escaneie o QR Code ou copie a chave:</p>
 """
 
 if pix_qr_b64:
-    coffee_html += f'<img src="data:image/png;base64,{pix_qr_b64}" style="max-width: 200px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">'
+    pix_html += f'<img src="data:image/png;base64,{pix_qr_b64}" style="max-width: 200px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">'
 
-coffee_html += """
+pix_html += """
         <div class="pix-key">(74) 98821-7793</div>
-        <p class="coffee-tip">💡 Qualquer valor ajuda a manter este projeto vivo!</p>
+        <p class="pix-tip">💡 Qualquer valor é bem-vindo! Obrigado por ajudar.</p>
     </div>
 </div>
 """
 
-st.markdown(coffee_html, unsafe_allow_html=True)
+st.markdown(pix_html, unsafe_allow_html=True)
 
 # =================== GETMEP / UPE RODAPÉ ===================
 st.markdown("---")
