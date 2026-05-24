@@ -493,6 +493,12 @@ if feather_b64:
         <img src="data:image/png;base64,{feather_b64}" class="feather-logo" alt="FeatherTranskript">
     </div>
     """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <div class="feather-logo-container">
+        <h1 style="font-size: 3em; margin: 0;">🪶</h1>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Header
 st.markdown("<h1>FeatherTranskript Web</h1>", unsafe_allow_html=True)
@@ -768,6 +774,8 @@ if getmep_b64 and feather_b64:
 else:
     st.markdown("""
     <div class="getmep-footer">
+        <div style="font-size: 2em; margin-bottom: 15px;">🪶 × 📚</div>
+        <div class="divider"></div>
         <h4>GETMEP — Grupo de Estudos Teórico-Metodológicos em Educação e Pesquisa</h4>
         <p>
             Este aplicativo web é fomentado pelo <strong>GETMEP</strong>,<br>
