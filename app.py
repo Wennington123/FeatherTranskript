@@ -10,7 +10,7 @@ import base64
 # =================== CONFIGURAÇÕES ===================
 st.set_page_config(
     page_title="FeatherTranskript Web",
-    page_icon="🪶",
+    page_icon="feathertlogo.png",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -21,8 +21,8 @@ def img_to_base64(path):
         return base64.b64encode(f.read()).decode()
 
 # Carregar logos em base64
-logo_path = Path(__file__).parent / "assets" / "logo.png"
-getmep_path = Path(__file__).parent / "assets" / "getmep_logo.png"
+logo_path = Path(__file__).parent / "assets" / "feathertlogo.png"
+getmep_path = Path(__file__).parent / "assets" / "getmeplogo.png"
 pix_qr_path = Path(__file__).parent / "assets" / "pix_qrcode.png"
 
 feather_b64 = img_to_base64(logo_path) if logo_path.exists() else ""
