@@ -1,0 +1,15 @@
+name: Manter Streamlit Acordado
+
+on:
+  schedule:
+    # Executa a cada 6 horas (todos os dias)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Permite que você teste o botão manualmente
+
+jobs:
+  ping-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Visitar o aplicativo
+        run: |
+          curl -I "https://feathertranskriptweb.streamlit.app/"
