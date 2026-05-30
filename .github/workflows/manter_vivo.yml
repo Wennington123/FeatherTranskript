@@ -1,22 +1,28 @@
-name: Manter Streamlit Acordado
+name: Manter Streamlit Acordado (Playwright)
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */4 * * *'   # a cada 4 horas
+  workflow_dispatch:          # execução manual
 
 jobs:
-  ping-app:
+  wake-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping no aplicativo Streamlit
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Playwright e dependências
         run: |
-          URL="https://feathertranskriptweb.streamlit.app/"
-          echo "🔄 Visitando $URL ..."
-          # Faz requisição HEAD e ignora o código de status (apenas queremos que o servidor acorde)
-          curl -I -s --max-time 60 \
-            -H "User-Agent: Mozilla/5.0" \
-            -o /dev/null \
-            "$URL"
-          echo "✅ Ping enviado com sucesso (independente do código HTTP)"
-          # Sempre sai com 0, pois o objetivo é apenas gerar tráfego
+          pip install playwright
+          playwright install chromium
+
+      - name: Executar script de wake
+        env:
+          STREAMLIT_URL: "https://feathertranskriptweb.streamlit.app/"
+        run: python wake_app.py
