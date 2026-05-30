@@ -12,12 +12,11 @@ jobs:
       - name: Ping no aplicativo Streamlit
         run: |
           URL="https://feathertranskriptweb.streamlit.app/"
-          echo "🔄 Visitando $URL com HEAD request..."
-          HTTP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}" \
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-            "$URL")
-          echo "✅ Código HTTP: $HTTP_CODE"
-          if [ "$HTTP_CODE" -ne 200 ] && [ "$HTTP_CODE" -ne 302 ] && [ "$HTTP_CODE" -ne 301 ]; then
-            echo "⚠️ Resposta inesperada: $HTTP_CODE"
-            exit 1
-          fi
+          echo "🔄 Visitando $URL ..."
+          # Faz requisição HEAD e ignora o código de status (apenas queremos que o servidor acorde)
+          curl -I -s --max-time 60 \
+            -H "User-Agent: Mozilla/5.0" \
+            -o /dev/null \
+            "$URL"
+          echo "✅ Ping enviado com sucesso (independente do código HTTP)"
+          # Sempre sai com 0, pois o objetivo é apenas gerar tráfego
