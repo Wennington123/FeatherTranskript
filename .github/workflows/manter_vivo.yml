@@ -2,14 +2,30 @@ name: Manter Streamlit Acordado
 
 on:
   schedule:
-    # Executa a cada 6 horas (todos os dias)
-    - cron: '0 */6 * * *'
-  workflow_dispatch: # Permite que você teste o botão manualmente
+    # Executa a cada 5 horas (evita ser muito frequente)
+    - cron: '0 */5 * * *'
+  workflow_dispatch:  # permite acionar manualmente
 
 jobs:
   ping-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Visitar o aplicativo
+      - name: Ping no aplicativo Streamlit
         run: |
-          curl -I "https://feathertranskriptweb.streamlit.app/"
+          URL="https://feathertranskriptweb.streamlit.app/"
+          echo "🔄 Visitando $URL ..."
+          # Faz uma requisição GET completa, segue redirecionamentos,
+          # usa User-Agent de navegador real, timeout de 60s,
+          # e captura o código HTTP
+          HTTP_CODE=$(curl -L --max-time 60 \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -s -o /dev/null -w "%{http_code}" \
+            "$URL")
+          
+          echo "✅ Código HTTP recebido: $HTTP_CODE"
+          
+          # Se não for 200, falha a execução (para efeito de log)
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "⚠️ Atenção: o app respondeu com $HTTP_CODE. Pode não ter acordado corretamente."
+            exit 1
+          fi
