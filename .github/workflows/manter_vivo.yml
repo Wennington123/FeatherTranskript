@@ -2,9 +2,8 @@ name: Manter Streamlit Acordado
 
 on:
   schedule:
-    # Executa a cada 5 horas (evita ser muito frequente)
-    - cron: '0 */5 * * *'
-  workflow_dispatch:  # permite acionar manualmente
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   ping-app:
@@ -13,19 +12,12 @@ jobs:
       - name: Ping no aplicativo Streamlit
         run: |
           URL="https://feathertranskriptweb.streamlit.app/"
-          echo "🔄 Visitando $URL ..."
-          # Faz uma requisição GET completa, segue redirecionamentos,
-          # usa User-Agent de navegador real, timeout de 60s,
-          # e captura o código HTTP
-          HTTP_CODE=$(curl -L --max-time 60 \
+          echo "🔄 Visitando $URL com HEAD request..."
+          HTTP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}" \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-            -s -o /dev/null -w "%{http_code}" \
             "$URL")
-          
-          echo "✅ Código HTTP recebido: $HTTP_CODE"
-          
-          # Se não for 200, falha a execução (para efeito de log)
-          if [ "$HTTP_CODE" -ne 200 ]; then
-            echo "⚠️ Atenção: o app respondeu com $HTTP_CODE. Pode não ter acordado corretamente."
+          echo "✅ Código HTTP: $HTTP_CODE"
+          if [ "$HTTP_CODE" -ne 200 ] && [ "$HTTP_CODE" -ne 302 ] && [ "$HTTP_CODE" -ne 301 ]; then
+            echo "⚠️ Resposta inesperada: $HTTP_CODE"
             exit 1
           fi
