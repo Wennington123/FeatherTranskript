@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "FeatherTranskript",
+    "slug": "feathertranskript",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f8fafc"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.feathertranskript.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Precisamos do microfone para gravar e transcrever seu áudio localmente.",
+        "UIBackgroundModes": ["audio"]
+      }
+    },
+    "android": {
+      "package": "com.feathertranskript.app",
+      "versionCode": 1,
+      "permissions": ["RECORD_AUDIO", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#4CAF50"
+      }
+    },
+    "plugins": ["expo-av"],
+    "extra": {
+      "eas": {
+        "projectId": "feathertranskript-mobile"
+      }
+    }
+  }
+}

@@ -1,21 +1,15 @@
-name: Manter Streamlit Acordado (Playwright)
+name: Manter Streamlit Acordado
 
 on:
   schedule:
-    - cron: '0 */8 * * *'
-  workflow_dispatch:
+    # Executa a cada 6 horas (todos os dias)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Permite que você teste o botão manualmente
 
 jobs:
-  wake-app:
+  ping-app:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install playwright
-      - run: playwright install chromium
-      - name: Run wake script
-        env:
-          STREAMLIT_URL: "https://feathertranskriptweb.streamlit.app/"
-        run: python wake_app.py
+      - name: Visitar o aplicativo
+        run: |
+          curl -I "https://feathertranskriptweb.streamlit.app/"
