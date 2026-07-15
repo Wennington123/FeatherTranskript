@@ -11,29 +11,42 @@
       "resizeMode": "contain",
       "backgroundColor": "#f8fafc"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.feathertranskript.app",
       "infoPlist": {
         "NSMicrophoneUsageDescription": "Precisamos do microfone para gravar e transcrever seu áudio localmente.",
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {
       "package": "com.feathertranskript.app",
       "versionCode": 1,
-      "permissions": ["RECORD_AUDIO", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "permissions": [
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4CAF50"
       }
     },
-    "plugins": ["expo-av"],
+    "plugins": [
+      "expo-av"
+    ],
     "extra": {
       "eas": {
-        "projectId": "feathertranskript-mobile"
+        "projectId": "2bf1cfaa-5385-46e6-b4a3-92d3b56ace25"
       }
-    }
+    },
+    "owner": "wennington123"
   }
 }
