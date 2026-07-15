@@ -41,8 +41,8 @@ async function downloadFile(url: string, dest: string, onProgress?: (p: number) 
     dest,
     {},
     (progress) => {
-      if (onProgress && progress.totalBytesExpectedToDownload > 0) {
-        onProgress(progress.totalBytesWritten / progress.totalBytesExpectedToDownload);
+      if (onProgress && progress.totalBytesExpectedToWrite > 0) {
+        onProgress(progress.totalBytesWritten / progress.totalBytesExpectedToWrite);
       }
     },
   );

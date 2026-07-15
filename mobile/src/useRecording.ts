@@ -49,7 +49,6 @@ export function useRecording() {
 
         const { promise } = whisper.transcribe(wavUri, {
           language: lang === 'auto' ? undefined : lang,
-          task: 'transcribe',
         });
         const { result: text } = await promise;
         setResult(text?.trim() ?? '');

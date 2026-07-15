@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "paths": {
+      "whisper.rn": ["./node_modules/whisper.rn/lib/typescript/index.d.ts"],
+      "whisper.rn/src/realtime-transcription": ["./node_modules/whisper.rn/lib/typescript/realtime-transcription/index.d.ts"],
+      "whisper.rn/src/realtime-transcription/adapters/AudioPcmStreamAdapter": ["./node_modules/whisper.rn/lib/typescript/realtime-transcription/adapters/AudioPcmStreamAdapter.d.ts"],
+      "whisper.rn/*": ["./node_modules/whisper.rn/lib/typescript/*"]
+    }
+  },
+  "include": ["App.tsx", "src/**/*.ts", "src/**/*.tsx"]
+}

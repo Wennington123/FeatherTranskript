@@ -4,8 +4,8 @@ import {
   RealtimeTranscriber,
   RingBufferVad,
   VAD_PRESETS,
-} from 'whisper.rn/realtime-transcription';
-import { AudioPcmStreamAdapter } from 'whisper.rn/realtime-transcription/adapters';
+} from 'whisper.rn/src/realtime-transcription';
+import { AudioPcmStreamAdapter } from 'whisper.rn/src/realtime-transcription/adapters/AudioPcmStreamAdapter';
 import type { WhisperContext, WhisperVadContext } from 'whisper.rn';
 
 export type LangOption = 'pt' | 'en' | 'auto';
@@ -37,8 +37,8 @@ export function useRealtime() {
             transcribeOptions: { language: lang === 'auto' ? undefined : lang },
           },
           {
-            onTranscribe: (event) => {
-              const data = (event as any).data;
+            onTranscribe: (event: any) => {
+              const data = event.data;
               if (data?.result) {
                 const all = transcriberRef.current?.getTranscriptionResults() || [];
                 const full = all
