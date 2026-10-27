@@ -42,6 +42,18 @@ eas build -p android --profile production # gera um .aab (loja)
 
 Ao terminar, o EAS disponibiliza o link de download do APK.
 
+## Build via GitHub Actions (APK + Release)
+
+O workflow [`.github/workflows/build-apk.yml`](../.github/workflows/build-apk.yml) compila o
+APK no runner do GitHub e publica automaticamente em **Releases**:
+
+- **Manual**: Actions → **Build APK** → *Run workflow* (informe a versão).
+- **Por tag**: `git tag v1.0.1 && git push origin v1.0.1`.
+
+O APK sai assinado com a chave de debug, pronto para instalação direta. O `postinstall`
+aplica o `namespace` exigido pelo AGP 8 nos módulos nativos antigos
+(`@fugood/react-native-audio-pcm-stream` e `react-native-fs`).
+
 ## Rodar em desenvolvimento (opcional)
 
 ```bash

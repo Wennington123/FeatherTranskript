@@ -14,4 +14,11 @@ export const theme = {
   text: '#455A64',
   pix: '#009688',
   pixDark: '#00695C',
+  radius: {
+    sm: 16,
+    md: 20,
+    lg: 28,
+    xl: 32,
+    pill: 999,
+  },
 };
