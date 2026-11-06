@@ -1,13 +1,15 @@
 # 🪶 FeatherTranskript
 
 Aplicativo de **transcrição de áudio com IA** baseado no modelo **Whisper** da OpenAI,
-otimizado com **Faster-Whisper** / **whisper.cpp**. Disponível em três frentes:
+otimizado com **Faster-Whisper**. Disponível em duas frentes:
+
+> 🌐 **Site do projeto (GitHub Pages):** https://wennington123.github.io/FeatherTranskript/
+> — licença (MIT), política de privacidade, termos de uso e links de download.
 
 | Pasta        | Plataforma           | Descrição                                                    |
 | ------------ | -------------------- | ------------------------------------------------------------ |
-| [`web/`](./web)       | Navegador (Streamlit)    | App web hospedado em `feathertranskriptweb.streamlit.app`   |
+| [`desktop/`](./desktop) | Windows / Linux        | App nativo 100% local — releases `.exe` / `.tar.gz` via GitHub Actions |
 | [`mobile/`](./mobile) | Android (APK)            | App **Expo nativo**, 100% on-device, com gravação e transcrição |
-| [`desktop/`](./desktop) | Windows/Linux/macOS   | Versão desktop (release) — documentada em `desktop/README.md` |
 
 ## ✨ Funcionalidades
 

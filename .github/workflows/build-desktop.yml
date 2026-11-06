@@ -1,0 +1,133 @@
+name: Build Desktop
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versão do app (ex.: 1.1.0)"
+        required: true
+        default: "1.1.0"
+  push:
+    tags:
+      - "desktop-v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.version.outputs.value }}
+    steps:
+      - name: Definir versão
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          REF_NAME: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          if [ "$REF_TYPE" = "tag" ]; then
+            VERSION="${REF_NAME#desktop-v}"
+          else
+            VERSION="$INPUT_VERSION"
+          fi
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows
+          - os: ubuntu-22.04
+            name: linux
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: desktop/requirements.txt
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install faster-whisper pyinstaller pillow
+
+      - name: Gerar ícone do executável (Windows)
+        if: matrix.name == 'windows'
+        working-directory: desktop
+        shell: bash
+        run: |
+          mkdir -p build
+          python - <<'EOF'
+          from PIL import Image
+
+          img = Image.open("assets/feathertlogo.png").convert("RGBA")
+          img.save("build/icon.ico", sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
+          EOF
+
+      - name: Compilar
+        working-directory: desktop
+        run: python -m PyInstaller feathertranskript.spec --noconfirm
+
+      - name: Renomear executável (Windows)
+        if: matrix.name == 'windows'
+        working-directory: desktop/dist
+        shell: bash
+        run: mv FeatherTranskript.exe "FeatherTranskript-v${{ needs.version.outputs.value }}-windows.exe"
+
+      - name: Empacotar tar.gz (Linux)
+        if: matrix.name == 'linux'
+        working-directory: desktop/dist
+        run: tar -czf "../FeatherTranskript-v${{ needs.version.outputs.value }}-linux.tar.gz" FeatherTranskript
+
+      - name: Salvar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.name }}
+          path: |
+            desktop/FeatherTranskript-v*-windows.exe
+            desktop/FeatherTranskript-v*-linux.tar.gz
+
+  release:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar artefatos
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publicar no GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('desktop-v{0}', needs.version.outputs.value) }}
+          name: FeatherTranskript Desktop v${{ needs.version.outputs.value }}
+          body: |
+            Versão desktop do FeatherTranskript v${{ needs.version.outputs.value }} (build ${{ github.run_number }}).
+
+            🌐 **Site do projeto:** https://wennington123.github.io/FeatherTranskript/
+            (licença, política de privacidade, termos de uso, downloads e seção de apoio)
+
+            💛 Apoie o projeto: https://ko-fi.com/wenningtondaquino
+
+            - **Windows**: `FeatherTranskript-v${{ needs.version.outputs.value }}-windows.exe` — arquivo único, basta baixar e executar
+            - **Linux**: `FeatherTranskript-v${{ needs.version.outputs.value }}-linux.tar.gz` — extraia e execute `./FeatherTranskript/FeatherTranskript`
+            - Transcrição 100% local (faster-whisper, CPU)
+            - No primeiro uso, o modelo de IA escolhido é baixado da internet (≈75 MB a ≈3 GB) e fica em cache
+          files: dist/*
+          generate_release_notes: true
