@@ -92,15 +92,13 @@ jobs:
       - name: Empacotar tar.gz (Linux)
         if: matrix.name == 'linux'
         working-directory: desktop/dist
-        run: tar -czf "../FeatherTranskript-v${{ needs.version.outputs.value }}-linux.tar.gz" FeatherTranskript
+        run: tar -czf "FeatherTranskript-v${{ needs.version.outputs.value }}-linux.tar.gz" FeatherTranskript
 
       - name: Salvar artefato
         uses: actions/upload-artifact@v4
         with:
           name: desktop-${{ matrix.name }}
-          path: |
-            desktop/FeatherTranskript-v*-windows.exe
-            desktop/FeatherTranskript-v*-linux.tar.gz
+          path: desktop/dist/FeatherTranskript-v*
 
   release:
     needs: [version, build]
